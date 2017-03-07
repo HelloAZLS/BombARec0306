@@ -2,16 +2,17 @@ package com.example.administrator.bombarec;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,21 +60,17 @@ public class MainActivity extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
-
-      /*  String name = data.getStringExtra("name");
-        delPersonData(data);
-        super.onActivityResult(requestCode, resultCode, data);*/
     }
 
     private void delPersonData(Intent data, int resultCode) {
         String name = data.getStringExtra("name");
         String age = data.getStringExtra("age").trim();
         String addr = data.getStringExtra("addr");
-        Log.i("a发疯",age);
         int position = data.getIntExtra("position",-1);
+        String mBitmap = data.getStringExtra("mBitmap");
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(age) && !TextUtils.isEmpty(addr)) {
             int nAge = Integer.parseInt(age);
-            Person person = new Person(name,nAge , addr);
+            Person person = new Person(name,nAge , addr,mBitmap);
             //增加
             if (resultCode == 10010) {
                 person.save(new SaveListener<String>() {
@@ -91,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
                 });
             } else if (resultCode == 11111) {
                 //修改
-                Log.i("阿飞金卡","afk");
                if (position!=-1){
                    person.update(mArrays.get(position).getObjectId(), new UpdateListener() {
 
@@ -182,6 +178,12 @@ public class MainActivity extends AppCompatActivity {
         public void onBindViewHolder(MyViewHolder holder, final int position) {
             final Person person = mArrays.get(position);
 
+            holder.tvName.setText(person.getName());
+            holder.tvAge.setText(person.getAge() + "");
+            holder.tvAddr.setText(person.getAddress());
+            Bitmap string2Bitmap = BitmapUtil.string2Bitmap(person.getmBit());
+            holder.Tou.setImageBitmap(string2Bitmap);
+            //删除按钮处理
             holder.btDel.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -195,10 +197,6 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(ctx, "删除成功", Toast.LENGTH_SHORT).show();
                                 mArrays.remove(position);
                                 initDate();
-                         /* if (){
-                              MyRecyAdapter2 mRecyAdapter = new MyRecyAdapter2(mArrays,mainUI,mRecy);
-                              mRecy.setAdapter(mRecyAdapter);
-                          }*/
 
                             } else {
                                 Toast.makeText(ctx, "删除失败" + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -218,12 +216,11 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("age",person.getAge()+"");
                     intent.putExtra("addr",person.getAddress());
                     intent.putExtra("position",position);
+                    intent.putExtra("stringBit",person.getmBit());
                     mainUI.startActivityForResult(intent,REQUEST_CODE_ADA);
                 }
             });
-            holder.tvName.setText(person.getName());
-            holder.tvAge.setText(person.getAge() + "");
-            holder.tvAddr.setText(person.getAddress());
+
         }
 
         @Override
@@ -238,6 +235,7 @@ public class MainActivity extends AppCompatActivity {
             TextView tvAddr;
             Button btDel;
             LinearLayout llEd;
+            ImageView Tou;
 
             public MyViewHolder(View view) {
                 super(view);
@@ -246,6 +244,7 @@ public class MainActivity extends AppCompatActivity {
                 tvName = (TextView) view.findViewById(R.id.tv_name);
                 tvAge = (TextView) view.findViewById(R.id.tv_age);
                 tvAddr = (TextView) view.findViewById(R.id.tv_addr);
+                Tou = (ImageView)view.findViewById(R.id.iv_tou);
             }
         }
     }

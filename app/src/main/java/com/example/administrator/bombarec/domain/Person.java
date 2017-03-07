@@ -10,15 +10,31 @@ public class Person extends BmobObject {
     private String name;
     private  int age;
     private  String address;
+    private  String mBit;
+
+    public Person(String name, int age, String address, String mBit) {
+        this.name = name;
+        this.age = age;
+        this.address = address;
+        this.mBit = mBit;
+    }
     //private  String objectId;
 
     public Person() {
     }
 
-    public Person(String name, int age, String address) {
+    /*public Person(String name, int age, String address) {
         this.name = name;
         this.age = age;
         this.address = address;
+    }*/
+
+    public String getmBit() {
+        return mBit;
+    }
+
+    public void setmBit(String mBit) {
+        this.mBit = mBit;
     }
 
     public String getName() {
