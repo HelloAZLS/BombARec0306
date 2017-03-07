@@ -54,7 +54,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        try {
             delPersonData(data, resultCode);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
       /*  String name = data.getStringExtra("name");
         delPersonData(data);
         super.onActivityResult(requestCode, resultCode, data);*/
