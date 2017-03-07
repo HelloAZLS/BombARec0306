@@ -10,11 +10,12 @@ public class Person extends BmobObject {
     private String name;
     private  int age;
     private  String address;
+    //private  String objectId;
 
     public Person() {
     }
 
-    public Person(String name, int age, String addr) {
+    public Person(String name, int age, String address) {
         this.name = name;
         this.age = age;
         this.address = address;
@@ -43,4 +44,14 @@ public class Person extends BmobObject {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    /*@Override
+    public String getObjectId() {
+        return objectId;
+    }
+
+    @Override
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
+    }*/
 }
