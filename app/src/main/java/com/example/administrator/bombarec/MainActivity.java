@@ -29,14 +29,17 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String AppKey = "686dd6cbf2d3f86022e7ca491b58504f";
     private int REQUEST_CODE = 103;
     private Button btnAdd;
+    private Button btnReg;
+    private Button btnLogn;
     private RecyclerView mRecy;
     private ArrayList<Person> mArrays;
     private MyRecyAdapter mRecyAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             delPersonData(data, resultCode);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -66,11 +69,11 @@ public class MainActivity extends AppCompatActivity {
         String name = data.getStringExtra("name");
         String age = data.getStringExtra("age").trim();
         String addr = data.getStringExtra("addr");
-        int position = data.getIntExtra("position",-1);
+        int position = data.getIntExtra("position", -1);
         String mBitmap = data.getStringExtra("mBitmap");
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(age) && !TextUtils.isEmpty(addr)) {
             int nAge = Integer.parseInt(age);
-            Person person = new Person(name,nAge , addr,mBitmap);
+            Person person = new Person(name, nAge, addr, mBitmap);
             //增加
             if (resultCode == 10010) {
                 person.save(new SaveListener<String>() {
@@ -88,21 +91,21 @@ public class MainActivity extends AppCompatActivity {
                 });
             } else if (resultCode == 11111) {
                 //修改
-               if (position!=-1){
-                   person.update(mArrays.get(position).getObjectId(), new UpdateListener() {
+                if (position != -1) {
+                    person.update(mArrays.get(position).getObjectId(), new UpdateListener() {
 
-                       @Override
-                       public void done(BmobException e) {
-                           if (e == null) {
-                               Toast.makeText(MainActivity.this, "更新成功", Toast.LENGTH_SHORT).show();
-                               initDate();
-                           } else {
-                               Toast.makeText(MainActivity.this, "更新失败" + e.getErrorCode(), Toast.LENGTH_SHORT).show();
-                           }
-                       }
+                        @Override
+                        public void done(BmobException e) {
+                            if (e == null) {
+                                Toast.makeText(MainActivity.this, "更新成功", Toast.LENGTH_SHORT).show();
+                                initDate();
+                            } else {
+                                Toast.makeText(MainActivity.this, "更新失败" + e.getErrorCode(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
 
-                   });
-               }
+                    });
+                }
             }
         }
     }
@@ -122,9 +125,9 @@ public class MainActivity extends AppCompatActivity {
                     for (Person p : list) {
                         mArrays.add(p);
                     }
-                    if(mRecyAdapter!=null){
+                    if (mRecyAdapter != null) {
                         ////写到这里
-                        mRecyAdapter = new MyRecyAdapter(mArrays,MainActivity.this);
+                        mRecyAdapter = new MyRecyAdapter(mArrays, MainActivity.this);
                     }
                     mRecy.setAdapter(mRecyAdapter);
 
@@ -138,6 +141,11 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         mRecy = (RecyclerView) findViewById(R.id.recycler);
         btnAdd = (Button) findViewById(R.id.btn_add);
+        btnReg = (Button) findViewById(R.id.btn_reg);
+        btnLogn = (Button) findViewById(R.id.btn_logn);
+        btnReg.setOnClickListener(this);
+        btnLogn.setOnClickListener(this);
+
         //增加
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,13 +159,28 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_reg:
+                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.btn_logn:
+                Intent intent1 = new Intent(MainActivity.this,LognActivity.class);
+                startActivity(intent1);
+                break;
 
-//RecyclerView 适配器
+        }
+    }
+
+
+    //RecyclerView 适配器
     class MyRecyAdapter extends RecyclerView.Adapter<MyRecyAdapter.MyViewHolder> {
 
         private final MainActivity mainUI;
         private Context ctx;
-        private  int REQUEST_CODE_ADA = 10011;
+        private int REQUEST_CODE_ADA = 10011;
         private final ArrayList<Person> mArrays;
 
 
@@ -211,13 +234,13 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(ctx, PersonDetailActivity.class);
-                    intent.putExtra("REQUEST","CESHI");
-                    intent.putExtra("name",person.getName());
-                    intent.putExtra("age",person.getAge()+"");
-                    intent.putExtra("addr",person.getAddress());
-                    intent.putExtra("position",position);
-                    intent.putExtra("stringBit",person.getmBit());
-                    mainUI.startActivityForResult(intent,REQUEST_CODE_ADA);
+                    intent.putExtra("REQUEST", "CESHI");
+                    intent.putExtra("name", person.getName());
+                    intent.putExtra("age", person.getAge() + "");
+                    intent.putExtra("addr", person.getAddress());
+                    intent.putExtra("position", position);
+                    intent.putExtra("stringBit", person.getmBit());
+                    mainUI.startActivityForResult(intent, REQUEST_CODE_ADA);
                 }
             });
 
@@ -244,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
                 tvName = (TextView) view.findViewById(R.id.tv_name);
                 tvAge = (TextView) view.findViewById(R.id.tv_age);
                 tvAddr = (TextView) view.findViewById(R.id.tv_addr);
-                Tou = (ImageView)view.findViewById(R.id.iv_tou);
+                Tou = (ImageView) view.findViewById(R.id.iv_tou);
             }
         }
     }

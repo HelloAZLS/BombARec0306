@@ -15,7 +15,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".RegisterActivity"/>
         <activity android:name=".PersonDetailActivity"/>
+        <activity android:name=".LognActivity"/>
     </application>
     <!--允许联网 -->
     <uses-permission android:name="android.permission.INTERNET" />
