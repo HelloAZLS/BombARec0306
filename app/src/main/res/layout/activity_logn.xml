@@ -3,9 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@mipmap/hua2"
     android:paddingTop="100dp">
 
     <EditText
+        android:textColor="#fff"
         android:id="@+id/et_logn_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,6 +15,7 @@
         android:textSize="20sp" />
 
     <EditText
+        android:textColor="#fff"
         android:id="@+id/et_logn_pwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

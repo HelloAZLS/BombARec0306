@@ -1,5 +1,6 @@
 package com.example.administrator.bombarec;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -81,8 +82,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 @Override
                                 public void done(MyUser s, BmobException e) {
                                     if (e == null) {
-                                        Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
-                                        finish();
+                                        Toast.makeText(RegisterActivity.this, "注册成功,跳转到登录页面", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(RegisterActivity.this,LognActivity.class);
+                                        startActivity(intent);
                                     } else {
                                         Toast.makeText(RegisterActivity.this, "注册失败" + e.getMessage(), Toast.LENGTH_SHORT).show();
                                     }

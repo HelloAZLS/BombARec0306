@@ -29,16 +29,18 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity  {
 
     private String AppKey = "686dd6cbf2d3f86022e7ca491b58504f";
     private int REQUEST_CODE = 103;
     private Button btnAdd;
-    private Button btnReg;
-    private Button btnLogn;
+    private TextView btnUser;
+   /* private Button btnReg;
+    private Button btnLogn;*/
     private RecyclerView mRecy;
     private ArrayList<Person> mArrays;
     private MyRecyAdapter mRecyAdapter;
+    private String mUsername;
 
 
     @Override
@@ -51,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecy.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         mRecyAdapter = new MyRecyAdapter(mArrays, MainActivity.this);
         //mRecy.setAdapter(mRecyAdapter);
+        Bundle bundle = getIntent().getExtras();
+        mUsername = bundle.getString("username");
 
 
     }
@@ -141,10 +145,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initViews() {
         mRecy = (RecyclerView) findViewById(R.id.recycler);
         btnAdd = (Button) findViewById(R.id.btn_add);
-        btnReg = (Button) findViewById(R.id.btn_reg);
-        btnLogn = (Button) findViewById(R.id.btn_logn);
-        btnReg.setOnClickListener(this);
-        btnLogn.setOnClickListener(this);
+        btnUser = (TextView) findViewById(R.id.btn_user);
+        btnUser.setText(mUsername);
+       /* btnReg = (Button) findViewById(R.id.btn_reg);
+        btnLogn = (Button) findViewById(R.id.btn_logn);*/
+    /*    btnReg.setOnClickListener(this);
+        btnLogn.setOnClickListener(this);*/
 
         //增加
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -159,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    @Override
+   /* @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_reg:
@@ -172,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
         }
-    }
+    }*/
 
 
     //RecyclerView 适配器

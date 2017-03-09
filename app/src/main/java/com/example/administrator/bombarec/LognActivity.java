@@ -1,5 +1,6 @@
 package com.example.administrator.bombarec;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -49,7 +50,10 @@ public class LognActivity extends AppCompatActivity {
                     @Override
                     public void done(BmobUser bmobUser, BmobException e) {
                         if (e == null) {
-                            Toast.makeText(LognActivity.this, bmobUser.getUsername() + "用户登陆成功", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LognActivity.this, bmobUser.getUsername() + "用户登陆成功,将要跳转到主页面", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(LognActivity.this, MainActivity.class);
+                            intent.putExtra("username",bmobUser.getUsername());
+                            startActivity(intent);
                         } else {
                             Toast.makeText(LognActivity.this, "用户登陆失败" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             Log.i("消息", e.getMessage());
